@@ -11,7 +11,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 
 ### Prerequis 
 
-- Un logiciel de virtualisation ( Dans mon cas j'ai utilisé VirtualBox v6.1.22)
+- Un logiciel de virtualisation ( Dans mon cas j'ai utilisé [VirtualBox v6.1.22](https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1.22-144080-Win.exe))
 - Créer 4 VMs Debian 10 Buster pour le serveur web, le serveur de fichiers, le serveur ftp et le poste administrateur (node manager)
 - Que les 4 VMs disposent d'une connexion internet
 - Les VMs doivent être sur le même réseau
