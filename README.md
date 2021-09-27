@@ -18,10 +18,11 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 ## Installation
 
 #### SERVEUR WEB
-Installer la VM avec une image `bitnami-wordpress-5.8.0-14-r05-linux-debian-10-x86_64-nami.ova` du site [bitnami.com](https://www.bitnami.com/)
+Installer la VM avec une image `bitnami-wordpress-5.8.0-14-r05-linux-debian-10-x86_64-nami.ova` du site [bitnami.com](https://bitnami.com/stack/wordpress/virtual-machine)
 Configurer l'interface réseau :
 
 	nano /etc/network/interfaces
+
 
     auto enp0s3
     iface enp0s3 inet static
@@ -442,6 +443,6 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/Sylvain6363/Script-de-sauvegarde-avec-Ansible/blob/main/LICENSE) file for details
 
 Licensed under the Apache License, Version 2.0 ( the "license");
