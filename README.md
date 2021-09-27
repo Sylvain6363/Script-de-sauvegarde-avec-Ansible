@@ -9,11 +9,16 @@ Ces sauvegardes, une fois executées, sont déposées chaque jour au format zip 
 
 Ces instructions vous permettront d'obtenir une copie du projet opérationnel sur votre ordinateur local à des fins de développement et de test. Voir le déploiement pour des notes sur la façon de déployer le projet sur un système en direct.
 
-### Prerequis
+### Prerequis 
 
+- Un logiciel de virtualisation ( Dans mon cas j'ai utilisé VirtualBox v6.1.22)
 - Créer 4 VMs Debian 10 Buster pour le serveur web, le serveur de fichiers, le serveur ftp et le poste administrateur (node manager)
 - Que les 4 VMs disposent d'une connexion internet
 - Les VMs doivent être sur le même réseau
+
+### Maquette de l'architecture utilisée
+
+![Maquette réalisée sous GNS3 v2.2.21](https://github.com/Sylvain6363/Script-de-sauvegarde-avec-Ansible/blob/main/Capture%20d%E2%80%99%C3%A9cran%202021-09-24%20130233.png)
 
 ## Installation
 
@@ -197,7 +202,7 @@ Mettre à jour pip3
 
 	pip3 install --upgrade pip
 
-Installer `ansible 2.9.5`
+Installer `ansible 2.9.5` ( Dans cette maquette j'utilise Ansible v2.9.5)
 
 	pip3 install ansible==2.9.5
 
@@ -445,4 +450,4 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/Sylvain6363/Script-de-sauvegarde-avec-Ansible/blob/main/LICENSE) file for details
 
-Licensed under the Apache License, Version 2.0 ( the "license");
+
