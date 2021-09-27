@@ -18,7 +18,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 
 ### Maquette de l'architecture utilisée
 
-![Maquette réalisée sous GNS3 v2.2.21](https://github.com/Sylvain6363/Script-de-sauvegarde-avec-Ansible/blob/main/Capture%20d%E2%80%99%C3%A9cran%202021-09-24%20130233.png)
+![Maquette réalisée sous GNS3 v2.2.21](https://github.com/Sylvain6363/Script-de-sauvegarde-avec-Ansible/blob/main/Maquette%20image.png)
 
 ## Installation
 
