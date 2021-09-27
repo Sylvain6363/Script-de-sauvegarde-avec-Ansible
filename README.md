@@ -55,7 +55,7 @@ Redemarrer le service ssh :
 	systemctl restart ssh
 
 #### SERVEUR FTP  
-Installer la VM avec une image `debian-10.9.0-amd64-xfce-CD-1.iso` [image](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
+Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 Configurer l'interface réseau :
 
 	nano /etc/network/interfaces
@@ -119,7 +119,7 @@ Le répertoire `/ftpshare` doit être accessible avec les identifiants:
 * PASS aic
 
 #### SERVEUR DE FICHIERS
-Installer la VM avec une image `debian-10.9.0-amd64-xfce-CD-1.iso` [image](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
+Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 Configurer l'interface réseau :
 
 	nano /etc/network/interfaces
@@ -146,7 +146,7 @@ Ajouter `PermitRootLogin yes` au fichier `sshd_config` :
 	ano /etc/ssh/sshd_config 
 
 #### POSTE ADMINISTRATEUR (node manager)
-Installer la VM avec une image `debian-10.9.0-amd64-xfce-CD-1.iso` [image](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
+Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 Configurer l'interface réseau :
 
 	nano /etc/network/interfaces
