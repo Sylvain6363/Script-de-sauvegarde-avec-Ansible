@@ -1,17 +1,24 @@
 ---
 - name: "Installe le paquet ftp s'il n'est pas présent sur le serveur"
+  # Installe le paquet ftp (equivalent à apt install ftp)
   apt:
     name: ftp
+    # Met à jour le gestionnaire de package (équivalent à apt update)
     update_cache: yes
+    # Durée durant laquelle ne pas remettre à jour le cache apt 
     cache_valid_time: 60
+    # Installe la derniere version du package 
     state: latest
 
 - name: "Executer le script de sauvegarde"
-  script: /home/user-ansible/backups.py 
+  # Execute le script backups.py
+  script: /home/user-ansible/backups.py
+  # Execute le script avec python3
   args:
     executable: python3
+  # Permet d'afficher le résultat du script python 
   register: python_result
-- debug: var=python_result.stdout_lines  
+- debug: var=python_result.stdout_lines
 
  
 

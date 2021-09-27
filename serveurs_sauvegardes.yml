@@ -1,4 +1,5 @@
 ---
+# Groupe serveur_web
 - name: "Remplacement du chemin du script backups.py"
   hosts: localhost
   tasks:
@@ -20,7 +21,7 @@
   tasks:
   roles:
     - role: "serveurs_sauvegardes"
-
+# Groupe serveur_fichiers
 - name: "Recuperation du dossier et lancement du script pour le groupe serveur_fichiers"
   hosts: localhost
   tasks:
