@@ -386,6 +386,8 @@ Si nous avons besoin de faire une sauvegarde a partir d'un autre serveur, mais q
 
 Nous aurons aussi besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegardes.yml`
 
+	nano /home/user-ansible/serveurs_sauvegardes.yml
+
 	- name: "Remplacement du chemin du script backups.py"
 	  hosts: localhost
 	  tasks:
@@ -422,6 +424,8 @@ Si nous avons besoin de faire également une sauvegarde a partir d'un autre serv
 	vars_serveur_profils=home
 
 Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegardes.yml`
+
+	nano /home/user-ansible/serveurs_sauvegardes.yml
 	
 	- name: "Remplacement du chemin du script backups.py"
 	  hosts: localhost
