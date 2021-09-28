@@ -26,7 +26,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 Installer la VM avec une image `bitnami-wordpress-5.8.0-14-r05-linux-debian-10-x86_64-nami.ova` du site [bitnami.com](https://bitnami.com/stack/wordpress/virtual-machine)
 Configurer l'interface réseau :
 
-```nano /etc/network/interfaces```
+`nano /etc/network/interfaces`
 
     auto enp0s3
     iface enp0s3 inet static
@@ -58,7 +58,7 @@ Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdima
 
 Configurer l'interface réseau :
 
-	nano /etc/network/interfaces
+`nano /etc/network/interfaces`
 
 	auto enp0s3
 	iface enp0s3 inet static
@@ -91,7 +91,7 @@ Appliquer les permissions sur le répertoire `/ftpshare` :
 
 Configurer le fichier `ftp.conf` :
 
-	nano /etc/proftpd/conf.d/ftp.conf
+`nano /etc/proftpd/conf.d/ftp.conf`
 
 	ServerName         "SRV-FTP"	#la bannière qui apparaît à la connexion
 	UseIPv6            off			# Pas de connexion IPv6
@@ -123,7 +123,7 @@ Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdima
 
 Configurer l'interface réseau :
 
-	nano /etc/network/interfaces
+`nano /etc/network/interfaces`
 
 	auto enp0s3
 	iface enp0s3 inet static
@@ -151,7 +151,7 @@ Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdima
 
 Configurer l'interface réseau :
 
-	nano /etc/network/interfaces
+`nano /etc/network/interfaces`
 
 	auto enp0s3
 	iface enp0s3 inet static
@@ -164,7 +164,7 @@ Redemarrer le service réseau :
 
 Insérer dans le fichier `hosts` :
 
-	nano /etc/hosts
+`nano /etc/hosts`
 
 	192.168.100.11  SRV-WORDPRESS
 	192.168.100.12  SRV-FTP
@@ -212,7 +212,7 @@ Installer `ansible 2.9.5` ( Dans cette maquette j'utilise Ansible v2.9.5)
 
 Créer l'inventaire `inventaire.ini` :
 
-	nano /home/user-ansible/inventaire.ini
+`nano /home/user-ansible/inventaire.ini`
 
 	[serveur_web]
 	SRV-WORDPRESS
@@ -227,7 +227,7 @@ Créer l'inventaire `inventaire.ini` :
 
 Créer le fichier de config d'ansible `ansible.cfg` :
 
-	nano /home/user-ansible/ansible.cfg
+`nano /home/user-ansible/ansible.cfg`
 
 	[defaults]
 	inventory  = /home/user-ansible/inventaire.ini
@@ -265,7 +265,7 @@ Créer le role serveur `serveurs_sauvegardes` :
 
 Editer le fichier `main.yml` dans le répertoire tasks :
 
-	nano /home/user-ansible/roles/serveurs_sauvegardes/tasks/main.yml
+`nano /home/user-ansible/roles/serveurs_sauvegardes/tasks/main.yml`
 
     ---
 	- name: "Installe le paquet ftp s'il n'est pas présent sur le serveur"
@@ -283,7 +283,7 @@ Editer le fichier `main.yml` dans le répertoire tasks :
 
 Créer le playbook `serveurs_sauvegardes.yml` :
 
-	nano /home/user-ansible/serveurs_sauvegardes.yml
+`nano /home/user-ansible/serveurs_sauvegardes.yml`
 
 	---
 	- name: "Remplacement du chemin du script backups.py"
@@ -335,7 +335,7 @@ Ici le script est configuré pour sauvegarder le répertoire "bitnami" à la rac
 
 Ce script, tel qu'il est actuellement, est prévu pour faire la sauvegarde d'un répertoire par groupe. On peut le constater sur le fichier inventaire.ini, nous avons un groupe [serveur_web] qui contient le nom du serveur ou son ip ainsi que la variable dans le groupe [all:vars] qui indique le chemin du répertoire a sauvegarder pour ce serveur, puis également la même chose pour le groupe serveur_fichiers.
 
-	nano /home/user-ansible/inventaire.ini 
+`nano /home/user-ansible/inventaire.ini`
 
 	[serveur_web]
 	SRV-WORDPRESS
@@ -347,7 +347,7 @@ Ce script, tel qu'il est actuellement, est prévu pour faire la sauvegarde d'un 
 
 Si nous voulons faire la sauvegarde du répertoire `/etc/ssh` d'un serveur avec une ip `192.168.100.50`, on peut modifier comme cela :
 
-	nano /home/user-ansible/inventaire.ini 
+`nano /home/user-ansible/inventaire.ini`
 
 	[serveur_fichiers]
 	192.168.100.50
@@ -356,7 +356,7 @@ Si nous voulons faire la sauvegarde du répertoire `/etc/ssh` d'un serveur avec 
 
 La configuration du serveur FTP se renseigne directement sur le script python nommé backups.py
 
-	nano /home/user-ansible/backups.py
+`nano /home/user-ansible/backups.py`
 
 	host = "192.168.100.12" 
 	user = "aic"
@@ -368,7 +368,7 @@ Nous pouvons maintenant lancer la commande `ansible-playbook` pour effectuer les
 
 Pour lancer la commande ansible-playbook de manière journalière avec crontab, nous aurons besoin de 3 autres variables dans le fichier `inventaire.ini` qui permettront d'oter les arguments d'authentification sur la commande `ansible-playbook`
 
-	nano /home/user-ansible/inventaire.ini
+`nano /home/user-ansible/inventaire.ini`
 
 	ansible_user=user-ansible
 	ansible_ssh_pass=ansible
@@ -376,7 +376,7 @@ Pour lancer la commande ansible-playbook de manière journalière avec crontab, 
 
 Nous avons également besoin de renseigner le chemin du fichier `inventaire.ini` dans le fichier de configuration d'ansible `ansible.cfg`, cela permettra également d'oter l'argument d'inventaire sur la commande ansible-playbook
 
-	nano /home/user-ansible/ansible.cfg
+`nano /home/user-ansible/ansible.cfg`
 
 	[defaults]
 	inventory  = /home/user-ansible/inventaire.ini
@@ -395,6 +395,8 @@ Les sauvegardes s'executeront donc tous les jours de la semaine à 21H et laisse
 
 Si nous avons besoin de faire une sauvegarde a partir d'un autre serveur, mais qui possède le même dossier à sauvegarder que celui du groupe serveur_web, nous modifierons le fichier inventaire.ini comme ceci :
 
+`nano /home/user-ansible/inventaire.ini`
+
 	[serveur_web]
 	SRV-WORDPRESS
 	SRV-WORDPRESS-2
@@ -403,7 +405,7 @@ Si nous avons besoin de faire une sauvegarde a partir d'un autre serveur, mais q
 
 Nous aurons aussi besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegardes.yml`
 
-	nano /home/user-ansible/serveurs_sauvegardes.yml
+`nano /home/user-ansible/serveurs_sauvegardes.yml`
 
 	---
 	- name: "Remplacement du chemin du script backups.py"
@@ -431,7 +433,7 @@ Nous aurons aussi besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegarde
 
 Si nous avons besoin de faire également une sauvegarde a partir d'un autre serveur, mais qu'il possède son propre dossier à sauvegarder, nous ajouterons au fichier inventaire.ini un nouveau groupe avec son serveur mais aussi une nouvelle variable du répertoire a sauvegarder depuis le groupe `all:vars` :
 
-	nano /home/user-ansible/inventaire.ini
+`nano /home/user-ansible/inventaire.ini`
 
 	[serveur_web]
 	SRV-WORDPRESS
@@ -446,7 +448,7 @@ Si nous avons besoin de faire également une sauvegarde a partir d'un autre serv
 
 Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegardes.yml`
 
-	nano /home/user-ansible/serveurs_sauvegardes.yml
+`nano /home/user-ansible/serveurs_sauvegardes.yml`
 
 	---	
 	- name: "Remplacement du chemin du script backups.py"
