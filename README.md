@@ -261,66 +261,94 @@ Créer le role serveur `serveurs_sauvegardes` :
 Editer le fichier dans tasks `/home/user-ansible/roles/serveurs_sauvegardes/tasks/main.yml` :
 
     ---
-	  - name: "Installe le paquet ftp s'il n'est pas présent sur le serveur"
-	    apt:
-	      name: ftp
-	      update_cache: yes
-	      cache_valid_time: 60
-	      state: latest
-	  - name: "Executer le script de sauvegarde"
-	    script: /home/user-ansible/backups.py
-	    args:
-	      executable: python3 
-	    register: python_result
-	  - debug: var=python_result.stdout_lines
+	- name: "Installe le paquet ftp s'il n'est pas présent sur le serveur"
+	  apt:
+	    name: ftp
+	    update_cache: yes
+	    cache_valid_time: 60
+	    state: latest
+	- name: "Executer le script de sauvegarde"
+	  script: /home/user-ansible/backups.py
+	  args:
+	    executable: python3 
+	  register: python_result
+	- debug: var=python_result.stdout_lines
 
 Créer le playbook `serveurs_sauvegardes.yml` :
 
 	nano /home/user-ansible/serveurs_sauvegardes.yml
 
-    ---
-	  - name: "Remplacement du chemin du script backups.py"
-				  hosts: localhost
-				  tasks:
-				    - name: "Recupere le nom du dossier à sauvegarder"
-				      shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
-				      register: Dossier_serveur_web
-				    - name: "Remplacer le nom du serveur dans le script backups.py"
-				      lineinfile:
-				        dest: /home/user-ansible/backups.py
-				        regexp: 'srv =.*'
-				        line: "srv = '{{ groups['serveur_web'][0] }}'"
-				    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
-				      lineinfile:
-				        dest: /home/user-ansible/backups.py
-				        regexp: 'nomdossier =.*'
-				        line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'
-				- name: "Lancement du script de sauvegarde"
-				  hosts: serveur_web
-				  tasks:
-				  roles:
-				    - role: "serveurs_sauvegardes"
-				- name: "Recuperation du dossier et lancement du script pour le groupe serveur_fichiers"
-				  hosts: localhost
-				  tasks:
-				    - name: "Recupere le nom du dossier à sauvegarder"
-				      shell: "grep 'vars_serveur_fichiers=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
-				      register: Dossier_serveur_fichiers
-				    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
-				      lineinfile:
-				        dest: /home/user-ansible/backups.py
-				        regexp: 'nomdossier =.*'
-				        line: 'nomdossier = "{{Dossier_serveur_fichiers.stdout}}"'
-				    - name: "Remplacer le nom du serveur dans le script backups.py"
-				      lineinfile:
-				        dest: /home/user-ansible/backups.py
-				        regexp: 'srv =.*'
-				        line: "srv = '{{ groups['serveur_fichiers'][0] }}'"
-				- name: "Lancement du script de sauvegarde"
-				  hosts: serveur_fichiers
-				  tasks:
-				  roles:
-				    - role: "serveurs_sauvegardes"
+	---
+	- name: "Remplacement du chemin du script backups.py"
+	  hosts: localhost
+	  tasks:
+	    - name: "Recupere le nom du dossier à sauvegarder"
+	      shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
+	      register: Dossier_serveur_web
+	    - name: "Remplacer le nom du serveur dans le script backups.py" 
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'srv =.*'
+	        line: "srv = '{{ groups['serveur_web'][0] }}'"
+	    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py" 
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'nomdossier =.*'
+	        line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'  
+	- name: "Lancement du script de sauvegarde"
+	  hosts: serveur_web
+	  tasks:
+	  roles:
+	    - role: "serveurs_sauvegardes"
+	- name: "Recuperation du dossier et lancement du script pour le groupe serveur_fichiers"
+	  hosts: localhost
+	  tasks:
+	    - name: "Recupere le nom du dossier à sauvegarder"
+	      shell: "grep 'vars_serveur_fichiers=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
+	      register: Dossier_serveur_fichiers
+	    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py" 
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'nomdossier =.*'
+	        line: 'nomdossier = "{{Dossier_serveur_fichiers.stdout}}"'
+	    - name: "Remplacer le nom du serveur dans le script backups.py" 
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'srv =.*'
+	        line: "srv = '{{ groups['serveur_fichiers'][0] }}'"
+	- name: "Lancement du script de sauvegarde"
+	  hosts: serveur_fichiers
+	  tasks:
+	  roles:
+	    - role: "serveurs_sauvegardes"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  			
 
 ## Utilisation
 
