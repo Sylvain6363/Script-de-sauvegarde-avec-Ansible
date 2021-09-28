@@ -29,9 +29,9 @@ from ftplib import FTP  # module permettant la connexion FTP
 # variable permettant la connexion au serveur FTP 
 ftp = FTP()  
 # variable nom du serveur ciblé ( le playbook modifie cette variable )
-srv = 'SRV-WORDPRESS'
+srv = 'SRV-FILES'
 # variable nom du dossier à sauvegarder ( le playbook modifie cette variable )
-nomdossier = "bitnami"
+nomdossier = "partagefichiers"
 # variable qui correspond a /nomdossier
 Dossier = f"/{nomdossier}"
 # variable chemin du dossier à sauvegarder
@@ -146,6 +146,7 @@ def repertoiresauvegarde(nomdudossier):
         ftp.cwd(nomdudossier)
 
 # fonction qui stock la sauvegarde zippée dans le répertoire FTP 
+# arc est le nom de l'archive à stocker
 def stocklasauvegarde(arc):
     # stock l'archive zippée "arc" dans le repertoire FTP 
     ftp.storbinary('STOR ' + arc, open(arc, 'rb'))
@@ -222,5 +223,3 @@ def main():
 # ces instructions ne seront pas executées si le script est importé comme module.
 if __name__ == '__main__':
     main()
-
-
