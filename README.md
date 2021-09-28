@@ -320,35 +320,7 @@ Créer le playbook `serveurs_sauvegardes.yml` :
 	  hosts: serveur_fichiers
 	  tasks:
 	  roles:
-	    - role: "serveurs_sauvegardes"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	  			
+	    - role: "serveurs_sauvegardes"		
 
 ## Utilisation
 
