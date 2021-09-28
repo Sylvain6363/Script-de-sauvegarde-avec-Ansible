@@ -422,7 +422,7 @@ Si nous avons besoin de faire également une sauvegarde a partir d'un autre serv
 	vars_serveur_profils=home
 
 Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegardes.yml`
-
+	
 	- name: "Remplacement du chemin du script backups.py"
 	  hosts: localhost
 	  tasks:
@@ -444,7 +444,6 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 		  tasks:
 		  roles:
 			- role: "serveurs_sauvegardes"
-
 
 
 ## Auteur
