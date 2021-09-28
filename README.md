@@ -388,27 +388,27 @@ Nous aurons aussi besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegarde
 
 	nano /home/user-ansible/serveurs_sauvegardes.yml
 
-	- name: "Remplacement du chemin du script backups.py"
-	  hosts: localhost
-	  tasks:
-		- name: "Recupere le nom du dossier à sauvegarder"
-		  shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
-		  register: Dossier_serveur_web
-		- name: "Remplacer le nom du serveur dans le script backups.py"
-		  lineinfile:
-			dest: /home/user-ansible/backups.py
-			regexp: 'srv =.*'
-			line: "srv = '{{ groups['serveur_web'][1] }}'"
-		- name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
-			lineinfile:
-			dest: /home/user-ansible/backups.py
-			regexp: 'nomdossier =.*'
-		    line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'
-		- name: "Lancement du script de sauvegarde"
-		  hosts: serveur_web
+		- name: "Remplacement du chemin du script backups.py"
+		  hosts: localhost
 		  tasks:
-		  roles:
-			- role: "serveurs_sauvegardes"
+			- name: "Recupere le nom du dossier à sauvegarder"
+			  shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
+			  register: Dossier_serveur_web
+			- name: "Remplacer le nom du serveur dans le script backups.py"
+			  lineinfile:
+				dest: /home/user-ansible/backups.py
+				regexp: 'srv =.*'
+				line: "srv = '{{ groups['serveur_web'][1] }}'"
+			- name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
+				lineinfile:
+				dest: /home/user-ansible/backups.py
+				regexp: 'nomdossier =.*'
+			    line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'
+			- name: "Lancement du script de sauvegarde"
+			  hosts: serveur_web
+			  tasks:
+			  roles:
+				- role: "serveurs_sauvegardes"
 
 Si nous avons besoin de faire également une sauvegarde a partir d'un autre serveur, mais qu'il possède son propre dossier à sauvegarder, nous ajouterons au fichier inventaire.ini un nouveau groupe avec son serveur mais aussi une nouvelle variable du répertoire a sauvegarder depuis le groupe `all:vars` :
 
@@ -427,27 +427,27 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 
 	nano /home/user-ansible/serveurs_sauvegardes.yml
 	
-	- name: "Remplacement du chemin du script backups.py"
-	  hosts: localhost
-	  tasks:
-		- name: "Recupere le nom du dossier à sauvegarder"
-		  shell: "grep 'vars_serveur_profils=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
-		  register: Dossier_serveur_profils
-		- name: "Remplacer le nom du serveur dans le script backups.py"
-		  lineinfile:
-			dest: /home/user-ansible/backups.py
-			regexp: 'srv =.*'
-		    line: "srv = '{{ groups['serveur_profils'][0] }}'"
-		- name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
-		  lineinfile:
-		    dest: /home/user-ansible/backups.py
-			regexp: 'nomdossier =.*'
-			line: 'nomdossier = "{{Dossier_serveur_profils.stdout}}"'
-		- name: "Lancement du script de sauvegarde"
-		  hosts: serveur_profils
+		- name: "Remplacement du chemin du script backups.py"
+		  hosts: localhost
 		  tasks:
-		  roles:
-			- role: "serveurs_sauvegardes"
+			- name: "Recupere le nom du dossier à sauvegarder"
+			  shell: "grep 'vars_serveur_profils=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
+			  register: Dossier_serveur_profils
+			- name: "Remplacer le nom du serveur dans le script backups.py"
+			  lineinfile:
+				dest: /home/user-ansible/backups.py
+				regexp: 'srv =.*'
+			    line: "srv = '{{ groups['serveur_profils'][0] }}'"
+			- name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
+			  lineinfile:
+			    dest: /home/user-ansible/backups.py
+				regexp: 'nomdossier =.*'
+				line: 'nomdossier = "{{Dossier_serveur_profils.stdout}}"'
+			- name: "Lancement du script de sauvegarde"
+			  hosts: serveur_profils
+			  tasks:
+			  roles:
+				- role: "serveurs_sauvegardes"
 
 
 ## Auteur
