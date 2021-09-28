@@ -447,7 +447,7 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 			  hosts: serveur_profils
 			  tasks:
 			  roles:
-				- role: "serveurs_sauvegardes"
+			    - role: "serveurs_sauvegardes"
 
 
 ## Auteur
