@@ -49,10 +49,12 @@ QUANTITE_DE_SAUVEGARDE_MAX = 7
 
 ########################## FONCTIONS ######################################################
 
-# fonction qui affiche la liste de tous les chemins de fichiers et dossiers dans le répertoire à sauvegarder
+# fonction qui affiche la liste de tous les chemins 
+# de fichiers et dossiers dans le répertoire à sauvegarder
 # dossier est le répertoire à sauvegarder
 def listedossierasauvegarder(dossier):
-    # créer une variable fichierdossier a partir de la fonction recupfichierdansdossier
+    # créer une variable fichierdossier a partir de la 
+    # fonction recupfichierdansdossier
     fichierdossier = recupfichiersdansdossier(dossier)
     # pour tous le contenu dans fichierdossier 
     for nom_fichier in fichierdossier:
@@ -66,7 +68,8 @@ def listedossierasauvegarder(dossier):
 def creerArchive(fichierliste, nomarchive):
     # essaye ceci 
     try:
-        # variable a pour créer une archive qui portera le nom nomarchive avec une compression standard deflated
+        # variable a pour créer une archive qui portera le nom nomarchive
+        # avec une compression standard deflated
         a = zipfile.ZipFile(nomarchive, 'w', zipfile.ZIP_DEFLATED)
         # pour tout le contenu dans fichierliste
         for f in fichierliste:
@@ -79,7 +82,8 @@ def creerArchive(fichierliste, nomarchive):
     # sinon le script s'arrete
     except: return False
 
-# fonction qui récupère tous le contenu du dossier à sauvegarder, qui l'insert dans un dictionnaire, et renvoit son contenu.
+# fonction qui récupère tous le contenu du dossier à sauvegarder, 
+# qui l'insert dans un dictionnaire, et renvoit son contenu.
 # dossier est le répertoire à sauvegarder
 def recupfichiersdansdossier(dossier):
     # tous les fichiers du dossier à sauvegarder iront dans ce dictionnaire
@@ -95,7 +99,8 @@ def recupfichiersdansdossier(dossier):
     # renvoit tous les chemins de fichiers du dossier
     return fichiersdossier 
 
-# fonction qui permet d'obtenir la liste brute des sauvegardes déjà presentes sur le serveur FTP de les insérer dans un dictionnaire
+# fonction qui permet d'obtenir la liste brute des sauvegardes
+# déjà presentes sur le serveur FTP, de les insérer dans un dictionnaire
 # et qui renvoit son contenu
 def obtenirsauvegardespresentes():
     # tous les fichiers du dossier qui contient les sauvegardes iront dans ce dictionnaire
@@ -105,9 +110,9 @@ def obtenirsauvegardespresentes():
     # renvoit la liste des sauvegardes
     return sauvegardes
 
-# fonction qui permet d'afficher la liste des sauvegardes de manière plus lisible
+# fonction qui permet d'afficher seulement les sauvegardes avec 
+# l'extension ".zip" dans l'ordre
 def afficherlistesauvegardes():
-    # permet d'afficher seulement les sauvegardes avec l'extension ".zip" dans l'ordre
     # pour les lignes dans l'ordre de chaque sauvegarde du dossier FTP
     for ligne in sorted(obtenirsauvegardespresentes()):
         # x represente le delimiteur "."
@@ -120,18 +125,23 @@ def afficherlistesauvegardes():
             print("-", ligne)
     
 
-# fonction qui supprime la plus ancienne des 7 sauvegardes maximum autorisées deja presentes sur le serveur FTP    
+# fonction qui supprime la plus ancienne des 7 sauvegardes maximum
+# autorisées deja presentes sur le serveur FTP    
 def suppressionsauvegarde():
-    # variable representant la liste dans l'ordre des sauvegardes presentes dans le répertoire FTP
+    # variable representant la liste dans l'ordre des sauvegardes presentes 
+    # dans le répertoire FTP
     liste_des_sauvegardes = list(sorted(obtenirsauvegardespresentes()))  
-    # tant que la liste des sauvegardes est supérieur ou égal au nombre maximum de sauvegardes autorisées à être stockées
+    # tant que la liste des sauvegardes est supérieur ou égal au nombre maximum 
+    # de sauvegardes autorisées à être stockées
     while len(liste_des_sauvegardes) >= QUANTITE_DE_SAUVEGARDE_MAX:  
         # variable representant la sauvegarde la plus ancienne (en position 0)
         sauvegarde_a_supprimer = liste_des_sauvegardes.pop(0)
-        # supprimer le contenu de la variable sauvegarde_a_supprimer (sauvegarde la plus ancienne)
+        # supprimer le contenu de la variable sauvegarde_a_supprimer 
+        # (sauvegarde la plus ancienne)
         ftp.delete(sauvegarde_a_supprimer)
 
-# fonction qui créé le dossier (porte le meme nom que le repertoire a sauvegarder) ou envoyer les sauvegardes sur le serveur FTP
+# fonction qui créé le dossier (porte le meme nom que le repertoire a sauvegarder)
+# ou envoyer les sauvegardes sur le serveur FTP
 # nomdudossier est le nom du répertoire à sauvegarder 
 def repertoiresauvegarde(nomdudossier):
     # si le nom de dossier n'existe pas dans le dossier racine du serveur FTP
