@@ -12,7 +12,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 ### Prerequis 
 
 - Un logiciel de virtualisation ( Dans mon cas j'ai utilisé [VirtualBox v6.1.22](https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1.22-144080-Win.exe))
-- Créer 4 VMs Debian 10 Buster pour le serveur web, le serveur de fichiers, le serveur ftp et le poste administrateur (node manager)
+- Créer 4 VMs Debian 10 Buster pour le serveur web, le serveur de fichiers, le serveur ftp et le poste aic (node manager)
 - Que les 4 VMs disposent d'une connexion internet
 - Les VMs doivent être sur le même réseau
 
@@ -22,7 +22,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 
 ## Installation
 
-#### SERVEUR WEB
+### SERVEUR WEB
 Installer la VM avec une image `bitnami-wordpress-5.8.0-14-r05-linux-debian-10-x86_64-nami.ova` du site [bitnami.com](https://bitnami.com/stack/wordpress/virtual-machine)
 Configurer l'interface réseau :
 
@@ -53,7 +53,7 @@ Redemarrer le service ssh :
 
 	systemctl restart ssh
 
-#### SERVEUR FTP  
+### SERVEUR FTP  
 Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 
 Configurer l'interface réseau :
@@ -118,7 +118,7 @@ Le répertoire `/ftpshare` doit être accessible avec les identifiants:
 * ID aic
 * PASS aic
 
-#### SERVEUR DE FICHIERS
+### SERVEUR DE FICHIERS
 Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 
 Configurer l'interface réseau :
@@ -146,7 +146,7 @@ Ajouter `PermitRootLogin yes` au fichier `sshd_config` :
 
 	nano /etc/ssh/sshd_config 
 
-#### POSTE ADMINISTRATEUR (node manager)
+### POSTE AIC (node manager)
 Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
 
 Configurer l'interface réseau :
