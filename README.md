@@ -26,8 +26,7 @@ Ces instructions vous permettront d'obtenir une copie du projet opérationnel su
 Installer la VM avec une image `bitnami-wordpress-5.8.0-14-r05-linux-debian-10-x86_64-nami.ova` du site [bitnami.com](https://bitnami.com/stack/wordpress/virtual-machine)
 Configurer l'interface réseau :
 
-	nano /etc/network/interfaces
-
+```nano /etc/network/interfaces```
 
     auto enp0s3
     iface enp0s3 inet static
