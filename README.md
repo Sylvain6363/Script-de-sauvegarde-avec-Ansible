@@ -145,7 +145,7 @@ Installer le paquet openssh-server
 
 Ajouter `PermitRootLogin yes` au fichier `sshd_config` : 
 
-	ano /etc/ssh/sshd_config 
+	nano /etc/ssh/sshd_config 
 
 #### POSTE ADMINISTRATEUR (node manager)
 Installer la VM avec une image [debian-10.9.0-amd64-xfce-CD-1.iso](https://cdimage.debian.org/cdimage/archive/10.9.0/amd64/iso-cd/debian-10.9.0-amd64-xfce-CD-1.iso)
@@ -163,7 +163,9 @@ Redemarrer le service réseau :
 
 	systemctl restart networking
 
-Insérer dans le fichier `/etc/hosts` :
+Insérer dans le fichier `hosts` :
+
+	nano /etc/hosts
 
 	192.168.100.11  SRV-WORDPRESS
 	192.168.100.12  SRV-FTP
@@ -209,7 +211,9 @@ Installer `ansible 2.9.5` ( Dans cette maquette j'utilise Ansible v2.9.5)
 
 	pip3 install ansible==2.9.5
 
-Créer l'inventaire `/home/user-ansible/inventaire.ini` :
+Créer l'inventaire `inventaire.ini` :
+
+	nano /home/user-ansible/inventaire.ini
 
 	[serveur_web]
 	SRV-WORDPRESS
@@ -222,7 +226,9 @@ Créer l'inventaire `/home/user-ansible/inventaire.ini` :
 	ansible_ssh_pass=ansible
 	ansible_become_pass=ansible
 
-Créer le fichier de config d'ansible `/home/user-ansible/ansible.cfg` :
+Créer le fichier de config d'ansible `ansible.cfg` :
+
+	nano /home/user-ansible/ansible.cfg
 
 	[defaults]
 	inventory  = /home/user-ansible/inventaire.ini
@@ -330,6 +336,8 @@ Ici le script est configuré pour sauvegarder le répertoire "bitnami" à la rac
 
 Ce script, tel qu'il est actuellement, est prévu pour faire la sauvegarde d'un répertoire par groupe. On peut le constater sur le fichier inventaire.ini, nous avons un groupe [serveur_web] qui contient le nom du serveur ou son ip ainsi que la variable dans le groupe [all:vars] qui indique le chemin du répertoire a sauvegarder pour ce serveur, puis également la même chose pour le groupe serveur_fichiers.
 
+	nano /home/user-ansible/inventaire.ini 
+
 	[serveur_web]
 	SRV-WORDPRESS
 	[serveur_fichiers]
@@ -340,12 +348,16 @@ Ce script, tel qu'il est actuellement, est prévu pour faire la sauvegarde d'un 
 
 Si nous voulons faire la sauvegarde du répertoire `/etc/ssh` d'un serveur avec une ip `192.168.100.50`, on peut modifier comme cela :
 
+	nano /home/user-ansible/inventaire.ini 
+
 	[serveur_fichiers]
 	192.168.100.50
 	[all:vars]
 	vars_serveur_fichiers=etc/ssh
 
 La configuration du serveur FTP se renseigne directement sur le script python nommé backups.py
+
+	nano /home/user-ansible/backups.py
 
 	host = "192.168.100.12" 
 	user = "aic"
@@ -357,11 +369,15 @@ Nous pouvons maintenant lancer la commande `ansible-playbook` pour effectuer les
 
 Pour lancer la commande ansible-playbook de manière journalière avec crontab, nous aurons besoin de 3 autres variables dans le fichier `inventaire.ini` qui permettront d'oter les arguments d'authentification sur la commande `ansible-playbook`
 
+	nano /home/user-ansible/inventaire.ini
+
 	ansible_user=user-ansible
 	ansible_ssh_pass=ansible
 	ansible_become_pass=ansible
 
 Nous avons également besoin de renseigner le chemin du fichier `inventaire.ini` dans le fichier de configuration d'ansible `ansible.cfg`, cela permettra également d'oter l'argument d'inventaire sur la commande ansible-playbook
+
+	nano /home/user-ansible/ansible.cfg
 
 	[defaults]
 	inventory  = /home/user-ansible/inventaire.ini
@@ -390,29 +406,33 @@ Nous aurons aussi besoin d'ajouter ce bloc dans le playbook `serveurs_sauvegarde
 
 	nano /home/user-ansible/serveurs_sauvegardes.yml
 
-		- name: "Remplacement du chemin du script backups.py"
-		  hosts: localhost
-		  tasks:
-			- name: "Recupere le nom du dossier à sauvegarder"
-			  shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
-			  register: Dossier_serveur_web
-			- name: "Remplacer le nom du serveur dans le script backups.py"
-			  lineinfile:
-				dest: /home/user-ansible/backups.py
-				regexp: 'srv =.*'
-				line: "srv = '{{ groups['serveur_web'][1] }}'"
-			- name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
-				lineinfile:
-				dest: /home/user-ansible/backups.py
-				regexp: 'nomdossier =.*'
-			    line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'
-			- name: "Lancement du script de sauvegarde"
-			  hosts: serveur_web
-			  tasks:
-			  roles:
-				- role: "serveurs_sauvegardes"
+	---
+	- name: "Remplacement du chemin du script backups.py"
+	  hosts: localhost
+	  tasks:
+	    - name: "Recupere le nom du dossier à sauvegarder"
+	      shell: "grep 'vars_serveur_web=*' /home/user-ansible/inventaire.ini | cut -d = -f 2"
+	      register: Dossier_serveur_web
+	    - name: "Remplacer le nom du serveur dans le script backups.py"
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'srv =.*'
+	        line: "srv = '{{ groups['serveur_web'][1] }}'"
+	    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
+	      lineinfile:
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'nomdossier =.*'
+	        line: 'nomdossier = "{{Dossier_serveur_web.stdout}}"'
+	- name: "Lancement du script de sauvegarde"
+	  hosts: serveur_web
+	  tasks:
+	  roles:
+	    - role: "serveurs_sauvegardes"	
+      
 
 Si nous avons besoin de faire également une sauvegarde a partir d'un autre serveur, mais qu'il possède son propre dossier à sauvegarder, nous ajouterons au fichier inventaire.ini un nouveau groupe avec son serveur mais aussi une nouvelle variable du répertoire a sauvegarder depuis le groupe `all:vars` :
+
+	nano /home/user-ansible/inventaire.ini
 
 	[serveur_web]
 	SRV-WORDPRESS
@@ -443,9 +463,9 @@ Nous aurons également besoin d'ajouter ce bloc dans le playbook `serveurs_sauve
 	        line: "srv = '{{ groups['serveur_profils'][0] }}'"
 	    - name: "Remplacer le nom du dossier à sauvegarder dans le script backups.py"
 	      lineinfile:
-	      dest: /home/user-ansible/backups.py
-	      regexp: 'nomdossier =.*'
-	      line: 'nomdossier = "{{Dossier_serveur_profils.stdout}}"'
+	        dest: /home/user-ansible/backups.py
+	        regexp: 'nomdossier =.*'
+	        line: 'nomdossier = "{{Dossier_serveur_profils.stdout}}"'
 	- name: "Lancement du script de sauvegarde"
 	  hosts: serveur_profils
 	  tasks:
